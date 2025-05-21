@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from data_loader import load_data
+import joblib
 
 def train_model(data_path):
     df = pd.read_csv(data_path,delimiter=";")
@@ -32,6 +33,11 @@ def train_model(data_path):
         mlflow.sklearn.log_model(model, "random_forest_model")
 
         print(f"Training completed. MSE: {mse}")
+
+        # Save model
+        joblib.dump(model, "model/wine_quality_model.pkl")
+        print("Model saved to model/wine_quality_model.pkl")
+
 
 if __name__ == "__main__":
     train_model("data/winequality-red.csv")
